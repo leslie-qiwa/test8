@@ -1,0 +1,37 @@
+{{/* Resolve effective image: per-site setting takes priority, then group shared image */}}
+{{ $ogImage := .Site.Params.ogImage | default .Site.Params.groupOgImage }}
+{{/* Open Graph */}}
+<meta property="og:type" content="website">
+<meta property="og:title" content="{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} — {{ .Site.Title }}{{ end }}">
+<meta property="og:description" content="{{ .Site.Params.seoDescription | default .Site.Params.description | default .Site.Title }}">
+<meta property="og:url" content="{{ .Permalink }}">
+{{ if $ogImage }}<meta property="og:image" content="{{ $ogImage | absURL }}">{{ end }}
+<meta property="og:site_name" content="{{ .Site.Title }}">
+{{/* Twitter Card */}}
+<meta name="twitter:card" content="{{ if $ogImage }}summary_large_image{{ else }}summary{{ end }}">
+<meta name="twitter:title" content="{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} — {{ .Site.Title }}{{ end }}">
+<meta name="twitter:description" content="{{ .Site.Params.seoDescription | default .Site.Params.description | default .Site.Title }}">
+{{ if $ogImage }}<meta name="twitter:image" content="{{ $ogImage | absURL }}">{{ end }}
+{{ if .Site.Params.twitterHandle }}<meta name="twitter:site" content="{{ .Site.Params.twitterHandle }}">{{ end }}
+{{/* Canonical URL */}}
+<link rel="canonical" href="{{ .Permalink }}">
+{{/* JSON-LD WebSite schema */}}
+{{ $authorName := .Site.Params.author | default .Site.Params.groupOrgName }}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": {{ .Site.Title | jsonify }},
+  "url": {{ .Site.BaseURL | jsonify }},
+  "description": {{ (.Site.Params.seoDescription | default .Site.Params.description | default .Site.Title) | jsonify }}{{ if $authorName }},
+  "author": {
+    "@type": "Organization",
+    "name": {{ $authorName | jsonify }}
+  }{{ end }}{{ if .Site.Params.primarySiteUrl }},
+  "isPartOf": {
+    "@type": "WebSite",
+    "url": {{ .Site.Params.primarySiteUrl | jsonify }}
+  }{{ end }}{{ if .Site.Params.sameAs }},
+  "sameAs": {{ .Site.Params.sameAs | jsonify }}{{ end }}
+}
+</script>
