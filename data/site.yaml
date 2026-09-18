@@ -1,0 +1,20 @@
+features:
+  - title: blog
+    description: Details about blog.
+    icon: ★
+  - title: portfolio
+    description: Details about portfolio.
+    icon: ◆
+rows:
+  - title: About Us
+    paragraphs:
+      - ""
+    emoji: ✦
+cards:
+  - title: blog
+    description: We specialize in blog.
+    icon: 🎨
+  - title: portfolio
+    description: We specialize in portfolio.
+    icon: 💡
+testimonials: []

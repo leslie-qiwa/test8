@@ -1,0 +1,7 @@
+<section id="contact" class="section-contact">
+  <h2>{{ .Site.Params.contactTitle | default "Contact" }}</h2>
+  <p>{{ .Site.Params.contactSubtitle | default "Reach out anytime." }}</p>
+  {{ if .Site.Params.contactEmail }}
+  <a href="mailto:{{ .Site.Params.contactEmail }}" class="btn">{{ .Site.Params.contactEmail }}</a>
+  {{ end }}
+</section>

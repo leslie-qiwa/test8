@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="{{ .Site.Language.Locale | default "en" }}">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} — {{ .Site.Title }}{{ end }}</title>
+  <meta name="description" content="{{ .Site.Params.description | default .Site.Title }}">
+  <link rel="stylesheet" href="{{ "css/styles.css" | relURL }}">
+  {{ if .Site.Params.googleFonts }}<link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="{{ .Site.Params.googleFonts }}" rel="stylesheet">{{ end }}
+</head>
+<body>
+  <nav class="site-nav">
+    <a href="{{ .Site.BaseURL }}" class="brand">{{ if .Site.Params.logo }}<img src="{{ .Site.Params.logo | relURL }}" alt="{{ .Site.Title }}" style="height:32px;vertical-align:middle;">{{ else }}{{ .Site.Title }}{{ end }}</a>
+    <ul class="nav-links">
+      {{ range .Site.Menus.main }}
+      <li><a href="{{ .URL }}">{{ .Name }}</a></li>
+      {{ end }}
+    </ul>
+  </nav>
+  {{ block "main" . }}{{ end }}
+  {{ partial "footer.html" . }}
+</body>
+</html>

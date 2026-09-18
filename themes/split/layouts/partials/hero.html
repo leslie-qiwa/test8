@@ -1,0 +1,14 @@
+<section id="hero" class="section-hero">
+  <div class="hero-text">
+    <h1>{{ .Site.Params.heroTitle | default .Site.Title }}</h1>
+    <p class="tagline">{{ .Site.Params.tagline | default "Built for people who care about quality." }}</p>
+    <a href="{{ .Site.Params.ctaUrl | default "#contact" }}" class="btn">{{ .Site.Params.ctaText | default "Get Started" }}</a>
+  </div>
+  <div class="hero-visual">
+    {{ if .Site.Params.heroImage }}
+    <img src="{{ .Site.Params.heroImage }}" alt="{{ .Site.Title }}">
+    {{ else }}
+    <div class="hero-placeholder">{{ .Site.Params.heroEmoji | default "🚀" }}</div>
+    {{ end }}
+  </div>
+</section>

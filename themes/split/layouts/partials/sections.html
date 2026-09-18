@@ -1,0 +1,12 @@
+{{ with (hugo.Data).site }}
+{{ range $i, $row := .rows }}
+<section id="section-{{ $i }}" class="section-row{{ if eq (mod $i 2) 1 }} reverse{{ end }}">
+  <div class="row-text">
+    <h2>{{ $row.title }}</h2>
+    {{ range $row.paragraphs }}<p>{{ . }}</p>{{ end }}
+    {{ if $row.ctaText }}<a href="{{ $row.ctaUrl | default "#contact" }}" class="btn" style="margin-top:1rem">{{ $row.ctaText }}</a>{{ end }}
+  </div>
+  <div class="row-visual">{{ $row.emoji | default "✦" }}</div>
+</section>
+{{ end }}
+{{ end }}

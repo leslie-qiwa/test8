@@ -1,0 +1,17 @@
+{{ $galleryDir := "images/gallery" }}
+{{ $files := readDir (printf "static/%s" $galleryDir) }}
+{{ if $files }}
+<section id="gallery" class="section section-gallery">
+  <h2>{{ $.Site.Params.galleryTitle | default "Gallery" }}</h2>
+  <div class="gallery-grid">
+    {{ range $files }}
+    {{ $ext := lower (path.Ext .Name) }}
+    {{ if or (eq $ext ".jpg") (eq $ext ".jpeg") (eq $ext ".png") (eq $ext ".webp") (eq $ext ".gif") }}
+    <div class="gallery-item">
+      <img src="/{{ $galleryDir }}/{{ .Name }}" alt="{{ $.Site.Title }} gallery" loading="lazy">
+    </div>
+    {{ end }}
+    {{ end }}
+  </div>
+</section>
+{{ end }}

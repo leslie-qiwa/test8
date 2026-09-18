@@ -1,0 +1,36 @@
+title: test8
+theme: split
+baseURL: /
+locale: en
+disableKinds:
+  - taxonomy
+  - term
+menus:
+  main:
+    - name: Blog
+      url: /blog/
+      weight: 1
+    - name: Work
+      url: /portfolio/
+      weight: 2
+    - name: Contact
+      url: "#contact"
+      weight: 3
+params:
+  tagline: ""
+  heroTitle: test8
+  ctaText: Get Started
+  ctaUrl: "#contact"
+  description: |-
+    Build a community
+    Target audience: Students & educators
+  contactTitle: Get in Touch
+  contactSubtitle: We'd love to hear from you.
+  cardsTitle: What We Offer
+  cta:
+    title: Ready to get started?
+    subtitle: ""
+    url: "#contact"
+    text: Get Started
+  sameAs:
+    - https://leslie-qiwa.github.io/test11

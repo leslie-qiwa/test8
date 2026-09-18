@@ -1,0 +1,7 @@
+{{ with .Site.Params.cta }}
+<section class="section-cta">
+  <h2>{{ .title | default "Ready to get started?" }}</h2>
+  <p>{{ .subtitle }}</p>
+  <a href="{{ .url | default "#contact" }}" class="btn">{{ .text | default "Let's talk" }}</a>
+</section>
+{{ end }}
