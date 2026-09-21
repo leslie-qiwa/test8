@@ -15,23 +15,30 @@
 {{ if .Site.Params.twitterHandle }}<meta name="twitter:site" content="{{ .Site.Params.twitterHandle }}">{{ end }}
 {{/* Canonical URL */}}
 <link rel="canonical" href="{{ .Permalink }}">
-{{/* JSON-LD WebSite schema */}}
-{{ $authorName := .Site.Params.author | default .Site.Params.groupOrgName }}
+{{/* JSON-LD — company: Organization+brand[]; brand: Organization+parentOrganization; standalone: Organization */}}
+{{ $desc := .Site.Params.seoDescription | default .Site.Params.description | default .Site.Title }}
+{{ $legalName := .Site.Params.author | default .Site.Params.groupOrgName | default .Site.Params.groupCompanyName }}
+{{ $role := .Site.Params.groupRole }}
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "WebSite",
-  "name": {{ .Site.Title | jsonify }},
-  "url": {{ .Site.BaseURL | jsonify }},
-  "description": {{ (.Site.Params.seoDescription | default .Site.Params.description | default .Site.Title) | jsonify }}{{ if $authorName }},
-  "author": {
+  "@type": "Organization",
+  "name": "{{ .Site.Title | replaceRE `\\` `\\\\` | replaceRE `"` `\\"` }}",
+  "url": "{{ .Site.BaseURL | replaceRE `\\` `\\\\` | replaceRE `"` `\\"` }}",
+  "description": "{{ $desc | replaceRE `\\` `\\\\` | replaceRE `"` `\\"` }}"
+  {{- if $legalName }},
+  "legalName": "{{ $legalName | replaceRE `\\` `\\\\` | replaceRE `"` `\\"` }}"
+  {{- end }}
+  {{- if eq $role "company" }}{{ with .Site.Params.groupBrands }},
+  "brand": [{{ range $i, $b := . }}{{ if $i }},{{ end }}
+    { "@type": "Brand", "name": "{{ $b.name | replaceRE `\\` `\\\\` | replaceRE `"` `\\"` }}", "url": "{{ $b.url | replaceRE `\\` `\\\\` | replaceRE `"` `\\"` }}" }{{ end }}
+  ]{{ end }}
+  {{- else if eq $role "brand" }}{{ with .Site.Params.groupCompanyName }},
+  "parentOrganization": {
     "@type": "Organization",
-    "name": {{ $authorName | jsonify }}
-  }{{ end }}{{ if .Site.Params.primarySiteUrl }},
-  "isPartOf": {
-    "@type": "WebSite",
-    "url": {{ .Site.Params.primarySiteUrl | jsonify }}
-  }{{ end }}{{ if .Site.Params.sameAs }},
-  "sameAs": {{ .Site.Params.sameAs | jsonify }}{{ end }}
+    "name": "{{ . | replaceRE `\\` `\\\\` | replaceRE `"` `\\"` }}"{{ with $.Site.Params.groupCompanyUrl }},
+    "url": "{{ . | replaceRE `\\` `\\\\` | replaceRE `"` `\\"` }}"{{ end }}
+  }{{ end }}
+  {{- end }}
 }
 </script>

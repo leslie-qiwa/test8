@@ -34,5 +34,7 @@ params:
     text: Get Started
   sameAs:
     - https://leslie-qiwa.github.io/test11
-  groupOrgName: seo1111
   primarySiteUrl: https://leslie-qiwa.github.io/test11
+  groupRole: brand
+  groupCompanyName: seo2
+  groupCompanyUrl: https://leslie-qiwa.github.io/test4
